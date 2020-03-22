@@ -5,7 +5,7 @@ DROP TABLE Company PURGE;
 create table Company (
 	id INT,
 	location_id INT,
-	name VARCHAR(50)
+	name VARCHAR2(50)
 );
 insert into Company (id, location_id, name) values (1, 52, 'Kanoodle');
 insert into Company (id, location_id, name) values (2, 764, 'Avamm');

@@ -4,7 +4,7 @@ DROP TABLE CarBodyType PURGE;
 
 create table CarBodyType (
 	id INT,
-	type VARCHAR(50)
+	type VARCHAR2(50)
 );
 insert into CarBodyType (id, type) values (1, 'Coupe');
 insert into CarBodyType (id, type) values (2, 'Hetchback');

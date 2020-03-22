@@ -5,9 +5,9 @@ DROP TABLE StationWorker PURGE;
 create table StationWorker (
 	id INT,
 	car_station_id INT,
-	name VARCHAR(50),
-	surname VARCHAR(50),
-	phone VARCHAR(50)
+	name VARCHAR2(50),
+	surname VARCHAR2(50),
+	phone VARCHAR2(50)
 );
 insert into StationWorker (id, car_station_id, name, surname, phone) values (1, 947, 'Francene', 'Burmingham', '373-50-7320');
 insert into StationWorker (id, car_station_id, name, surname, phone) values (2, 549, 'Frasco', 'Iglesias', '690-61-0756');

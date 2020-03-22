@@ -7,8 +7,8 @@ create table Damage (
 	car_id INT,
 	rental_id INT,
 	status_id INT,
-	part TEXT,
-	description TEXT
+	part VARCHAR2(4000),
+	description VARCHAR2(4000)
 );
 insert into Damage (id, car_id, rental_id, status_id, part, description) values (1, 467, 28, 2, 'nulla suspendisse', 'habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla');
 insert into Damage (id, car_id, rental_id, status_id, part, description) values (2, 144, 954, 2, 'turpis elementum ligula vehicula', 'nunc nisl duis bibendum felis sed interdum venenatis turpis enim');

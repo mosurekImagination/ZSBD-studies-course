@@ -11,6 +11,9 @@ create table Invoice (
 	payment_date DATE,
 	expire_date DATE
 );
+
+ALTER session set NLS_DATE_FORMAT='DD/MM/YYYY';
+
 insert into Invoice (id, status_id, company_id, summary_cost, exposure_date, payment_date, expire_date) values (1, 1, 169, 583.67, '27/10/2016', '03/06/2015', '12/07/2014');
 insert into Invoice (id, status_id, company_id, summary_cost, exposure_date, payment_date, expire_date) values (2, 2, 609, 76.32, '27/02/2017', '15/10/2013', '10/06/2013');
 insert into Invoice (id, status_id, company_id, summary_cost, exposure_date, payment_date, expire_date) values (3, 2, 522, 540.0, '02/12/2016', '03/02/2017', '29/03/2018');

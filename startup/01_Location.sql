@@ -4,15 +4,15 @@ DROP TABLE Location PURGE;
 
 create table Location (
 	id INT,
-	city VARCHAR(50),
-	country VARCHAR(50),
-	street_name VARCHAR(50),
-	street_number VARCHAR(50),
-	postal_code VARCHAR(50),
-	state VARCHAR(50),
-	latitude VARCHAR(50),
-	longitude VARCHAR(50),
-	time_zone VARCHAR(50)
+	city VARCHAR2(50),
+	country VARCHAR2(50),
+	street_name VARCHAR2(50),
+	street_number VARCHAR2(50),
+	postal_code VARCHAR2(50),
+	state VARCHAR2(50),
+	latitude VARCHAR2(50),
+	longitude VARCHAR2(50),
+	time_zone VARCHAR2(50)
 );
 insert into Location (id, city, country, street_name, street_number, postal_code, state, latitude, longitude, time_zone) values (1, 'Vyksa', 'Russia', 'Washington', '95447', '607069', null, 55.321347, 42.16866, 'Europe/Moscow');
 insert into Location (id, city, country, street_name, street_number, postal_code, state, latitude, longitude, time_zone) values (2, 'Babushkin', 'Russia', 'West', '81', '671235', null, 61.6724707, 40.2145002, 'Asia/Irkutsk');
