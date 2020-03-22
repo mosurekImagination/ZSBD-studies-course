@@ -444,7 +444,7 @@ insert into Car (vin, body_type_id, car_station_id, model, manufacturer, product
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('SAJWA6A72F8412034', 4, 473, 'Cayman', 'Porsche', 2009, 'Khaki', 10702, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1GYS4AEF6CR208877', 4, 344, 'Impala', 'Chevrolet', 2006, 'Indigo', 321178, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('SALAC2D49CA753831', 4, 433, 'Q', 'Infiniti', 2003, 'Mauv', 18432, 'true');
-insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FTEX1EW2AF455805', 2, 275, 'Town & Country', 'Chrysler', 2004, 'Maroon', 424267, 'false');
+insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FTEX1EW2AF455805', 2, 275, 'Town And Country', 'Chrysler', 2004, 'Maroon', 424267, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1N6AA0EC6DN246271', 3, 514, 'Spyder', 'Maserati', 1991, 'Turquoise', 320482, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1HGCR2F35FA821793', 4, 555, 'Seville', 'Cadillac', 1996, 'Teal', 10246, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('5NPET4AC8AH885131', 3, 493, 'Miata MX-5', 'Mazda', 1993, 'Purple', 368490, 'false');
@@ -602,7 +602,7 @@ insert into Car (vin, body_type_id, car_station_id, model, manufacturer, product
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FAHP3CN0AW471416', 3, 6, 'RX', 'Lexus', 2003, 'Aquamarine', 417738, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WVWED7AJXCW369461', 4, 156, 'GT-R', 'Nissan', 2010, 'Aquamarine', 56267, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('5GAKRAKD1EJ948544', 1, 360, 'Grand Prix Turbo', 'Pontiac', 1990, 'Goldenrod', 89423, 'true');
-insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('5J8TB3H74GL165182', 3, 824, 'Town & Country', 'Chrysler', 2009, 'Blue', 95679, 'false');
+insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('5J8TB3H74GL165182', 3, 824, 'Town And Country', 'Chrysler', 2009, 'Blue', 95679, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1G6AY5SX6E0462934', 4, 389, 'Sportage', 'Kia', 1999, 'Khaki', 100458, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WVWED7AJ2CW775105', 4, 635, 'SL-Class', 'Mercedes-Benz', 2002, 'Red', 428069, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('3VW1K7AJ2FM644438', 1, 502, 'Azera', 'Hyundai', 2011, 'Indigo', 533180, 'false');
@@ -763,7 +763,7 @@ insert into Car (vin, body_type_id, car_station_id, model, manufacturer, product
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('JTHBL5EF1B5186758', 4, 661, 'FF', 'Ferrari', 2012, 'Crimson', 220586, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('3C3CFFDR3DT337881', 1, 575, 'Silverado 2500', 'Chevrolet', 2000, 'Purple', 16698, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAULC58E85A091549', 2, 625, 'XC60', 'Volvo', 2010, 'Fuscia', 312326, 'false');
-insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1G4GF5G35FF881547', 1, 795, 'Town & Country', 'Chrysler', 2010, 'Fuscia', 57748, 'false');
+insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1G4GF5G35FF881547', 1, 795, 'Town And Country', 'Chrysler', 2010, 'Fuscia', 57748, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('3D73Y4HL8BG308310', 5, 593, 'Escort', 'Ford', 2001, 'Red', 467372, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FTEW1E81AK629830', 2, 941, 'Esperante', 'Panoz', 2005, 'Mauv', 109365, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAUSGAFC8CN573857', 2, 273, 'Elantra', 'Hyundai', 2013, 'Teal', 471378, 'true');
@@ -961,7 +961,7 @@ insert into Car (vin, body_type_id, car_station_id, model, manufacturer, product
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WBADR63452G211596', 3, 970, '300M', 'Chrysler', 2001, 'Turquoise', 416434, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAUDV94F87N996308', 5, 278, 'Sunbird', 'Pontiac', 1993, 'Purple', 138373, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1G6AP5SX6F0002788', 2, 936, 'Galant', 'Mitsubishi', 2005, 'Violet', 36321, 'true');
-insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAUEH98E56A327545', 3, 770, 'Town & Country', 'Chrysler', 1998, 'Aquamarine', 231319, 'true');
+insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAUEH98E56A327545', 3, 770, 'Town And Country', 'Chrysler', 1998, 'Aquamarine', 231319, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FTEW1E80AF147987', 4, 274, 'RDX', 'Acura', 2012, 'Khaki', 104844, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1N4AL2APXBN803106', 3, 345, 'Metro', 'Geo', 1997, 'Red', 540629, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('JTHFN2EYXA9947354', 4, 79, 'Villager', 'Mercury', 1996, 'Crimson', 140985, 'false');
@@ -1008,7 +1008,7 @@ insert into Car (vin, body_type_id, car_station_id, model, manufacturer, product
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('JN1AZ4EH3CM422831', 1, 646, '458 Italia', 'Ferrari', 2012, 'Purple', 52787, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('3N1CN7AP4FL647874', 4, 59, 'Ram Van 2500', 'Dodge', 2000, 'Turquoise', 453627, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WDCGG0EB7FG040557', 4, 502, 'SRX', 'Cadillac', 2010, 'Purple', 503286, 'true');
-insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1D4PT7GX5AW283014', 2, 539, 'Town & Country', 'Chrysler', 2007, 'Turquoise', 521999, 'false');
+insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1D4PT7GX5AW283014', 2, 539, 'Town And Country', 'Chrysler', 2007, 'Turquoise', 521999, 'false');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('WAULK98K99N985574', 3, 925, 'MKZ', 'Lincoln', 2007, 'Crimson', 91480, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('1FTSW2A52AE206421', 2, 413, 'Tribeca', 'Subaru', 2009, 'Goldenrod', 294562, 'true');
 insert into Car (vin, body_type_id, car_station_id, model, manufacturer, production_year, color, mileage, available) values ('4T1BB3EKXAU281891', 4, 969, 'Sidekick', 'Suzuki', 1993, 'Violet', 543449, 'false');
