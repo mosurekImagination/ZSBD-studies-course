@@ -6,6 +6,7 @@ services:
       - ./oradata:/opt/oracle/oradata
       - ./setup:/opt/oracle/scripts/setup
       - ./startup:/opt/oracle/scripts/startup
+      - ./manual:/opt/oracle/scripts/manual
     ports:
       - 1521:1521
       - 8080:8080
