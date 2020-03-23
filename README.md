@@ -16,19 +16,21 @@
  
 ## Instrukcja użytkowania:  
 * **Pierwsze uruchomienie:**  
-  docker-compose up (Obraz zajmuje ponad 6 GB, więc pobieranie może trochę potrwać. Dodatkowo pierwsze uruchomienie zajmuje około 30 minut)
+  ```docker-compose up``` (Obraz zajmuje ponad 6 GB, więc pobieranie może trochę potrwać. Dodatkowo pierwsze uruchomienie zajmuje około 30 minut)
 * **Połączenie z klientem lini komend z drugiego okna terminala:**  
-  docker exec -ti docker_database_1 sqlplus usr/pwd@pdb (Istnieje szansa, że kontener będzie nazywał się inaczej niż docker_database_1)
+  ```docker exec -ti <id_dockera> sqlplus usr/pwd@pdb```
+* **Uruchomienie SQL z pliku**  
+  ```docker exec -t <id_dockera> /bin/sh -c 'sqlplus usr/pwd@pdb < /opt/oracle/scripts/manual/transaction1.sql'  ```
 * **Wykonywanie operacji na danych:**  
   Wprowadzanie poleceń SQL
 * **Wyłączanie:**  
   CTRL + C lub docker-compose stop
 * **Uruchamianie kolejny raz:**  
-  docker-compose start
+  ```docker-compose start```
 * **Restart:**  
-  docker-compose restart
+  ```docker-compose restart```
 * **Usunięcie kontenerów i sieci Dockera:**  
-  docker-compose down (Potem konieczne będze czekanie na "pierwsze" uruchomienie)
+  ```docker-compose down``` (Potem konieczne będze czekanie na "pierwsze" uruchomienie)
   
 ## Rozwijanie projektu:  
 Dodawanie lub modyfikacja skrytptów z folderów setup (wykonywane raz przy pierwszym uruchomieniu) i startup (wykonywane przy każdym uruchomieniu, przy pierwszym też - po setup) i tym sposobem automatyzacja tworzenia, odświeżania danych i przebiegu testów, z przesyłaniem wyników na maszynę hosta, pod jednym poleceniem - docker-compose start
