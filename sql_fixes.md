@@ -7,8 +7,3 @@ SQL fixes:
 6. Add in files with DATE type: ALTER session set NLS_DATE_FORMAT='DD/MM/YYYY';
 
 Don't use comment, date and user for table and field names. (Already applied in the generator)
-
-
-sed -i "s/[^']false[^']*,/'false',/g" *.sql
-sed -i "s/[^']true[^']*,/'true',/g" *.sql
-sed -i "s/&/And/g" *.sql
