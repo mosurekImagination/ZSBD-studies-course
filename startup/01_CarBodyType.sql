@@ -3,14 +3,14 @@ CONNECT usr/pwd@//localhost:1521/pdb;
 DROP TABLE CarBodyType PURGE;
 
 create table CarBodyType (
-	id INT,
+	id NUMBER GENERATED ALWAYS AS IDENTITY,
 	type VARCHAR2(50)
 );
-insert into CarBodyType (id, type) values (1, 'Coupe');
-insert into CarBodyType (id, type) values (2, 'Hetchback');
-insert into CarBodyType (id, type) values (3, 'Combi');
-insert into CarBodyType (id, type) values (4, 'Normal');
-insert into CarBodyType (id, type) values (5, 'Van');
+insert into CarBodyType  (type) values ('Coupe');
+insert into CarBodyType  (type) values ('Hetchback');
+insert into CarBodyType  (type) values ('Combi');
+insert into CarBodyType  (type) values ('Normal');
+insert into CarBodyType  (type) values ('Van');
 
 COMMIT;
 EXIT;
