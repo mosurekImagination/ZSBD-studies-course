@@ -3,10 +3,11 @@ services:
   database:
     image: zaawansowanesystemybazdanych/bazadanych
     volumes:
-      - ./oradata:/opt/oracle/oradata
+      #- ./oradata:/opt/oracle/oradata
       - ./setup:/opt/oracle/scripts/setup
       - ./startup:/opt/oracle/scripts/startup
       - ./manual:/opt/oracle/scripts/manual
+      - ./dump:/home/oracle/dump
     ports:
       - 1521:1521
       - 8080:8080
