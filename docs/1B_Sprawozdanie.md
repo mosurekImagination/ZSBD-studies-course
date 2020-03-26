@@ -69,6 +69,11 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 
 ## Czasy transakcji
 #### Transakcja 1
+
+| Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
+| :--------------:  | :----------------: | :---------------: | :---------------: |
+| 0,719 | 1,019 | 0,825 | 10 |
+
 | Nr zapytania   | Minimalny czas[ms]| Maksymalny czas[ms]| Średni czas[ms]   | Ilość powtorzeń   |
 | :------------: | :--------------:  | :----------------: | :---------------: | :---------------: |
 | 1 | 0 | 0 | 0 | 0 |
@@ -82,6 +87,11 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 
 
 #### Transakcja 2
+
+| Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
+| :--------------:  | :----------------: | :---------------: | :---------------: |
+| 1,429 | 2,204 | 1,702 | 10 |
+
 | Nr zapytania   | Minimalny czas[ms]| Maksymalny czas[ms]| Średni czas[ms]   | Ilość powtorzeń   |
 | :------------: | :--------------:  | :----------------: | :---------------: | :---------------: |
 | 1 | 0 | 0 | 0 | 0 |
@@ -94,6 +104,11 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 | 8 | 0 | 0 | 0 | 0 |
 
 #### Transakcja 3
+
+| Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
+| :--------------:  | :----------------: | :---------------: | :---------------: |
+| 0,789 | 1,099 | 0,952 | 10 |
+
 | Nr zapytania   | Minimalny czas[ms]| Maksymalny czas[ms]| Średni czas[ms]   | Ilość powtorzeń   |
 | :------------: | :--------------:  | :----------------: | :---------------: | :---------------: |
 | 1 | 0 | 0 | 0 | 0 |
