@@ -9,7 +9,7 @@
   },
   {
     "name": "Dodaj pracownika do stacji",
-    "query": "INSERT INTO STATIONWORKER (ID, CAR_STATION_ID, NAME, SURNAME, PHONE) VALUES (99999, 123, 'George', 'Nowak', 123456789)"
+    "query": "INSERT INTO STATIONWORKER (CAR_STATION_ID, NAME, SURNAME, PHONE) VALUES (123, 'George', 'Nowak', 123456789)"
   },
   {
     "name": "Samochody, które były naprawiane przez więcej niż X firm",
@@ -25,7 +25,7 @@
   },
   {
     "name": "Dodaj znizke do trwajacych wypozyczen rozpoczetych w danym miescie w okreslonym czasie",
-    "query": "UPDATE PAYMENT SET DISCOUNT = DISCOUNT + 5, COST = COST * 0.90 WHERE STATUS_ID = (SELECT ID FROM PAYMENTSTATUS WHERE STATUS = 'waiting') AND ID = (SELECT PAYMENT_ID FROM RENTALHISTORY H JOIN CARSTATION CS ON CS.ID = H.START_STATION_ID JOIN LOCATION L on CS.LOCATION_ID = L.ID WHERE START_DATE BETWEEN '01/01/2017' AND '31/12/2017' AND L.CITY = 'Hannover')"
+    "query": "UPDATE PAYMENT SET DISCOUNT = DISCOUNT + 5, COST = COST * 0.90 WHERE STATUS_ID = (SELECT * FROM (SELECT ID FROM PAYMENTSTATUS WHERE STATUS = 'waiting') WHERE ROWNUM=1) AND ID = (SELECT * FROM (SELECT PAYMENT_ID FROM RENTALHISTORY H JOIN CARSTATION CS ON CS.ID = H.START_STATION_ID JOIN LOCATION L on CS.LOCATION_ID = L.ID WHERE H.START_DATE BETWEEN TO_DATE('2017/01/01', 'yyyy/mm/dd') AND TO_DATE('2017/12/31', 'yyyy/mm/dd') AND L.CITY = 'Hannover') WHERE ROWNUM=1)"
   },
   {
     "name": "Wystawienie faktury za naprawe - naprawa samochodu (available)",
@@ -33,7 +33,7 @@
   },
   {
     "name": "Wystawienie faktury za naprawe - dodanie kosztow naprawy do oplaty za wypozyczenie",
-    "query": "INSERT INTO INVOICE(ID, STATUS_ID, COMPANY_ID, SUMMARY_COST, EXPOSURE_DATE, PAYMENT_DATE, EXPIRE_DATE) VALUES (99999, (SELECT ID FROM PAYMENTSTATUS WHERE STATUS = 'waiting'), 20, 200.0, TO_DATE('2017/12/05', 'yyyy/mm/dd'), TO_DATE('2018/12/05', 'yyyy/mm/dd'), TO_DATE('2019/12/05', 'yyyy/mm/dd'))"
+    "query": "INSERT INTO INVOICE(STATUS_ID, COMPANY_ID, SUMMARY_COST, EXPOSURE_DATE, PAYMENT_DATE, EXPIRE_DATE) VALUES ((SELECT ID FROM PAYMENTSTATUS WHERE STATUS = 'waiting'), 20, 200.0, TO_DATE('2017/12/05', 'yyyy/mm/dd'), TO_DATE('2018/12/05', 'yyyy/mm/dd'), TO_DATE('2019/12/05', 'yyyy/mm/dd'))"
   },
   {
     "name": "Wystawienie faktury za naprawe - zmiana statusu wszystkich uszkodzen",
@@ -49,7 +49,7 @@
   },
   {
     "name": "Wystawienie faktury za naprawe #6",
-    "query": "UPDATE PAYMENT SET COST = COST + (SELECT SUMMARY_COST FROM INVOICE WHERE ROWNUM = (SELECT MAX(ROWNUM) FROM INVOICE)) WHERE ID = (SELECT PAYMENT_ID FROM RENTALHISTORY WHERE CAR_ID = 36)"
+    "query": "UPDATE PAYMENT SET COST = COST + (SELECT SUMMARY_COST FROM INVOICE WHERE ROWNUM = (SELECT MAX(ROWNUM) FROM INVOICE)) WHERE ID = (SELECT * FROM (SELECT PAYMENT_ID FROM RENTALHISTORY WHERE CAR_ID = 36) WHERE ROWNUM=1)"
   },
   {
     "name": "Uzytkownicy ktorzy w zadanym okresie czasu mieli kontakt z konkretnym pracownikiem (coronavirus)",

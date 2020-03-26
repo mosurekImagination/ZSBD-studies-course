@@ -9,7 +9,7 @@
   },
   {
     "name": "Zaktualizuj godziny otwarcia stacji, ktora znajduje sie w miescie X",
-    "query": "UPDATE CARSTATION SET OPEN_HOUR = 7, CLOSE_HOUR = 15 WHERE ID = (SELECT CARSTATION.ID FROM CARSTATION JOIN LOCATION L on CARSTATION.LOCATION_ID = L.ID WHERE L.CITY = 'Dongping')"
+    "query": "UPDATE CARSTATION SET OPEN_HOUR = 7, CLOSE_HOUR = 15 WHERE ID = (SELECT * FROM (SELECT CARSTATION.ID FROM CARSTATION JOIN LOCATION L on CARSTATION.LOCATION_ID = L.ID WHERE L.CITY = 'Dongping') WHERE ROWNUM=1)"
   },
   {
     "name": "Pogrupowane samochody, liczba uszkodzen i kosztow ich naprawy.",
@@ -17,7 +17,7 @@
   },
   {
     "name": "Dodaj nowy przeglad samochodu - nowa firma",
-    "query": "INSERT INTO COMPANY (id, location_id, name) VALUES (999999, 100, 'New company')"
+    "query": "INSERT INTO COMPANY (location_id, name) VALUES (100, 'New company')"
   },
   {
     "name": "Dodaj nowy przeglad samochodu - nowa faktura",
