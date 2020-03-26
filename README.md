@@ -36,3 +36,16 @@
 Dodawanie lub modyfikacja skrytptów z folderów setup (wykonywane raz przy pierwszym uruchomieniu) i startup (wykonywane przy każdym uruchomieniu, przy pierwszym też - po setup) i tym sposobem automatyzacja tworzenia, odświeżania danych i przebiegu testów, z przesyłaniem wyników na maszynę hosta, pod jednym poleceniem - docker-compose start
 
 Skrypty umieszczane w folderach setup i startup powinny mieć liczbę na początku nazwy, ponieważ są uruchamiane alfabetycznie.
+
+## Data Pump
+
+### Eksport danych
+
+```
+expdp usr/pwd@pdb schemas=USR directory=dump_dir dumpfile=schema_dump.dmp
+```
+
+### Import danych
+```
+impdp usr/pwd@pdb schemas=USR directory=dump_dir dumpfile=schema_dump.dmp
+```
