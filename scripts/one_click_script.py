@@ -66,23 +66,44 @@ class log:
         print(f"{bcolors.SUCCESS}{message}{bcolors.ENDC}")
 
 
-class DatabaseService:
+class DatabaseConfiguration:
+    host = '127.0.0.1'
+    port = '1521'
+    service_name = 'pdb'
 
-    def get_docker_id(self):
+    user = 'usr'
+    user_password = 'pwd'
+
+    admin_user = 'sys'
+    admin_user_password = 'pwd'
+
+    def __init__(self):
+        self.docker_id = self.get_docker_id()
+
+    @staticmethod
+    def get_docker_id():
         get_docker_id_cmd = r'docker ps | sed -rn "s/^([^ ]+) +zaawansowanesystemybazdanych\/bazadanych.*$/\1/p"'
         process = subprocess.Popen(get_docker_id_cmd, shell=True, stdout=subprocess.PIPE, universal_newlines=True)
         docker_id = process.communicate()[0].strip()
         return docker_id
 
-    def get_connection_url(self, admin):
+    @staticmethod
+    def get_connection_url(admin):
         if admin:
             return admin_user + '/' + admin_user_password + '@' + service_name + ' as sysdba'
         else:
             return user + '/' + user_password + '@' + service_name
 
+
+class DatabaseService:
+
+    def __init__(self, databaseConfiguration):
+        self.config = databaseConfiguration
+        self.db_connection = self.connect_to_database()
+
     def execute_sql_file(self, file, admin=False):
-        connection_url = self.get_connection_url(admin)
-        execute_sql_file_cmd = 'docker exec -t ' + self.get_docker_id() + ' /bin/sh -c "sqlplus ' + connection_url + ' < ' + file + '"'
+        connection_url = self.config.get_connection_url(admin)
+        execute_sql_file_cmd = 'docker exec -t ' + self.config.docker_id + ' /bin/sh -c "sqlplus ' + connection_url + ' < ' + file + '"'
 
         log.info("Executing file: " + file)
         log.info(execute_sql_file_cmd)
@@ -91,9 +112,9 @@ class DatabaseService:
         print(process.communicate()[0])
 
     def execute_sql(self, sql, admin=False):
-        connection_url = self.get_connection_url(admin)
+        connection_url = self.config.get_connection_url(admin)
 
-        execute_sql_cmd = r'docker exec -t ' + self.get_docker_id() + ' /bin/sh -c "echo \'' + sql + '\' | sqlplus ' + connection_url + '"'
+        execute_sql_cmd = r'docker exec -t ' + self.config.docker_id + ' /bin/sh -c "echo \'' + sql + '\' | sqlplus ' + connection_url + '"'
 
         log.info("Executing SQL: " + sql)
         log.info(execute_sql_cmd)
@@ -106,7 +127,7 @@ class DatabaseService:
         subprocess.Popen(chmod_dump_file_cmd, shell=True, stdout=subprocess.PIPE, universal_newlines=True)
 
         import_cmd = "impdp usr/pwd@pdb schemas=USR directory=dump_dir dumpfile=" + dump_file_name
-        docker_exec = "docker exec -t " + self.get_docker_id() +" /bin/sh -c '" + import_cmd + "'"
+        docker_exec = "docker exec -t " + self.config.docker_id + " /bin/sh -c '" + import_cmd + "'"
 
         log.info(docker_exec)
 
@@ -115,6 +136,10 @@ class DatabaseService:
 
     def reinitialize_database(self):
         log.header('----- REINITIALIZING DATABASE ----- ')
+
+        if self.db_connection is not None:
+            log.info("Close connection for USR")
+            self.db_connection.close()
 
         drop_user_and_schema_cmd = "DROP USER USR CASCADE;"
         log.info(drop_user_and_schema_cmd + " (Removes schema)")
@@ -131,6 +156,9 @@ class DatabaseService:
 
         self.import_data(dump_file_name)
 
+        log.info("Create connection for USR")
+        self.db_connection = self.connect_to_database()
+
         log.header('----- REINITIALIZING DATABASE COMPLETED ----- ')
 
     def connect_to_database(self):
@@ -138,12 +166,12 @@ class DatabaseService:
         number_of_tries = 0
         time_between_retries = 5
 
-        dsn_tns = cx_Oracle.makedsn(host, port, service_name=service_name)
+        dsn_tns = cx_Oracle.makedsn(self.config.host, self.config.port, service_name=self.config.service_name)
 
-        while not connection_succeeded and number_of_tries < 5:
+        while not connection_succeeded and number_of_tries < 3:
             try:
                 number_of_tries += 1
-                conn = cx_Oracle.connect(user=user, password=user_password, dsn=dsn_tns)
+                conn = cx_Oracle.connect(user=self.config.user, password=self.config.user_password, dsn=dsn_tns)
                 connection_succeeded = True
             except cx_Oracle.DatabaseError as err:
                 log.warn("Problem with connection to database. Retrying in " + str(time_between_retries) + "s...")
@@ -156,15 +184,9 @@ class DatabaseService:
         log.info('Successfully connected to the database')
         return conn
 
+    def get_number_of_rows_per_table(self):
 
-    def get_number_of_rows_per_table(self, db_connection=None):
-        close_connection = False
-
-        if db_connection is None:
-            db_connection = self.connect_to_database()
-            close_connection = True
-
-        c = db_connection.cursor()
+        c = self.db_connection.cursor()
 
         checked_tables = []
 
@@ -177,12 +199,7 @@ class DatabaseService:
             except cx_Oracle.DatabaseError as err:
                 checked_tables.append((table[0], table[1], None))
 
-
-        if close_connection:
-            db_connection.close()
-
         return checked_tables
-
 
     def divide_into_failed_and_successful_tables(self, tables_info):
         failed_tables = []
@@ -196,23 +213,18 @@ class DatabaseService:
 
         return successful_tables, failed_tables
 
-
     def print_failed_tables(self, failed_tables):
         for table in failed_tables:
             log.error('ERROR: ' + table[0] + ' SHOULD HAVE ' + str(table[1]) + ', was ' + str(table[2]))
-
 
     def print_successful_tables(self, successful_tables):
         for table in successful_tables:
             log.success('OK: ' + table[0] + ' has ' + str(table[2]) + ' rows')
 
-
-    def check_data_in_tables(self, db_connection=None):
+    def check_data_in_tables(self):
         log.header('\n----- DATA CHECK STARTED -----')
 
-        db_connection = self.connect_to_database()
-
-        tables_info = self.get_number_of_rows_per_table(db_connection)
+        tables_info = self.get_number_of_rows_per_table()
         successful_tables, failed_tables = self.divide_into_failed_and_successful_tables(tables_info)
 
         retries = 0
@@ -220,7 +232,7 @@ class DatabaseService:
 
         while len(failed_tables) > 0 and retries < 5:
             retries += 1
-            tables_info = self.get_number_of_rows_per_table(db_connection)
+            tables_info = self.get_number_of_rows_per_table()
             successful_tables, failed_tables = self.divide_into_failed_and_successful_tables(tables_info)
 
             if len(failed_tables) > 0:
@@ -240,33 +252,31 @@ class DatabaseService:
 
         return len(failed_tables) == 0
 
-
-    def execute_json_file(self, file):
-        log.info("----- Running " + file + " -----")
-        db_connection = self.connect_to_database()
-        c = db_connection.cursor()
-
+    @staticmethod
+    def get_queries_from_json_file(file):
         with open(file, 'r') as f:
-            queries = json.load(f)
-
-        db_connection.begin()
-        for query in queries:
-            log.info("\nRunning: " + query['name'])
-            log.info("Query: " + query['query'])
-
-            c.execute(query['query'])
-
-        db_connection.commit()
-        log.success("----- " + file + " completed -----")
-
+            return json.load(f)
 
     def execute_transaction(self, transaction):
         self.reinitialize_database()
         data_correct = self.check_data_in_tables()
 
+        log.info("----- Running " + transaction + " -----")
+
+        transaction_queries = self.get_queries_from_json_file(transaction)
+
         if data_correct:
             start = time.time()
-            self.execute_json_file(transaction)
+            c = self.db_connection.cursor()
+
+            self.db_connection.begin()
+
+            for query in transaction_queries:
+                log.info("\nRunning: " + query['name'])
+                log.info("Query: " + query['query'])
+                c.execute(query['query'])
+
+            self.db_connection.commit()
             end = time.time()
             duration = end - start
             log.success(transaction + " took: " + str(duration) + "s")
@@ -277,29 +287,41 @@ class DatabaseService:
 
 
 if __name__ == '__main__':
-    db = DatabaseService()
-    #db.check_data_in_tables()
-    db.reinitialize_database()
-    db.check_data_in_tables()
+    db = DatabaseService(DatabaseConfiguration())
+    # db.check_data_in_tables()
+    # db.reinitialize_database()
 
-# transactions_durations = []
-# last_duration = 0
-#
-# if last_duration is not None:
-#     transaction = "transaction1.json"
-#     last_duration = execute_transaction(transaction)
-#     transactions_durations.append((transaction, last_duration))
-#
-# if last_duration is not None:
-#     transaction = "transaction2.json"
-#     last_duration = execute_transaction(transaction)
-#     transactions_durations.append((transaction, last_duration))
-#
-# if last_duration is not None:
-#     transaction = "transaction3.json"
-#     last_duration = execute_transaction(transaction)
-#     transactions_durations.append((transaction, last_duration))
-#
-# log.success("\n\nTransactions' durations:")
-# for duration in transactions_durations:
-#     log.success(duration[0] + ": " + str(duration[1]) + "s")
+    transactions_durations = []
+    last_duration = 0
+
+    transaction = "../manual/transaction1.json"
+    transaction1_durations = []
+    for i in range(10):
+        if last_duration is not None:
+            last_duration = db.execute_transaction(transaction)
+            transaction1_durations.append(last_duration)
+    transactions_durations.append(transaction1_durations)
+
+    transaction = "../manual/transaction2.json"
+    transaction2_durations = []
+    for i in range(10):
+        if last_duration is not None:
+            last_duration = db.execute_transaction(transaction)
+            transaction2_durations.append(last_duration)
+    transactions_durations.append(transaction2_durations)
+
+    transaction = "../manual/transaction3.json"
+    transaction3_durations = []
+    for i in range(10):
+        if last_duration is not None:
+            last_duration = db.execute_transaction(transaction)
+            transaction3_durations.append(last_duration)
+    transactions_durations.append(transaction3_durations)
+
+    log.success("\n\nTransactions' durations:")
+    i = 1
+    for durations in transactions_durations:
+        log.success("Transaction " + str(i) + " average: " + str(sum(durations) / len(durations)) + "s")
+        log.success("Transaction " + str(i) + " maximum: " + str(max(durations)) + "s")
+        log.success("Transaction " + str(i) + " minimum: " + str(min(durations)) + "s")
+        i += 1

@@ -39,6 +39,16 @@ Skrypty umieszczane w folderach setup i startup powinny mieć liczbę na począt
 
 ## Data Pump
 
+### Dump file
+
+Zanim cokolwiek uruchomisz musisz pobrac ten plik do folderu ```dump```
+
+Dlaczego jest na ufile.io? Bo na githubie limit rozmiaru pliku to 100mb
+
+```
+https://ufile.io/attyn0lt
+```
+
 ### Eksport danych
 
 ```
