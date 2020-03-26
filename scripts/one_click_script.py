@@ -1,7 +1,7 @@
 import json
-import os
 import subprocess
 import time
+
 import cx_Oracle
 
 host = '127.0.0.1'
@@ -261,29 +261,96 @@ class DatabaseService:
         self.reinitialize_database()
         data_correct = self.check_data_in_tables()
 
+        if not data_correct:
+            log.error("Data check failed - " + transaction + " will not be executed")
+            return None
+
         log.info("----- Running " + transaction + " -----")
 
         transaction_queries = self.get_queries_from_json_file(transaction)
+        queries_durations = []
 
-        if data_correct:
-            start = time.time()
-            c = self.db_connection.cursor()
+        transaction_start_time = time.time()
+        c = self.db_connection.cursor()
 
-            self.db_connection.begin()
+        self.db_connection.begin()
 
-            for query in transaction_queries:
-                log.info("\nRunning: " + query['name'])
-                log.info("Query: " + query['query'])
-                c.execute(query['query'])
+        for query in transaction_queries:
+            log.info("\nRunning: " + query['name'])
+            log.info("Query: " + query['query'])
+            query_start_time = time.time()
+            c.execute(query['query'])
+            query_duration = time.time() - query_start_time
+            queries_durations.append((query, query_duration))
 
-            self.db_connection.commit()
-            end = time.time()
-            duration = end - start
-            log.success(transaction + " took: " + str(duration) + "s")
-            return duration
+        self.db_connection.commit()
+        transaction_duration = time.time() - transaction_start_time
+        log.success(transaction + " took: " + str(transaction_duration) + "s")
+        return transaction_duration, queries_durations
 
-        log.error("Transaction failed")
-        return None
+
+def benchmark_transactions(repeat_number=10):
+    transactions = ["../manual/transaction1.json", "../manual/transaction2.json", "../manual/transaction3.json"]
+    statistics = []
+
+    for transaction in transactions:
+        transaction_stats = benchmark_transaction(transaction, repeat_number)
+        statistics.append((transaction, transaction_stats))
+
+    return statistics
+
+
+def benchmark_transaction(transaction, repeat_number=10):
+    transaction_stats = []
+
+    for i in range(repeat_number):
+        last_stats = db.execute_transaction(transaction)
+        transaction_stats.append(last_stats)
+
+    return transaction_stats
+
+
+# (transaction_name, [(transaction_duration, [(query, duration), (query, duration), ...]), ...])
+
+def print_transaction_statistics(statistics):
+    transaction_file = statistics[0]
+    transaction_durations = list(map(lambda stats: stats[0], statistics[1]))
+
+    max_transaction_duration = str(round(max(transaction_durations), 5))
+    min_transaction_duration = str(round(min(transaction_durations), 5))
+    avg_transaction_duration = str(round(sum(transaction_durations) / len(transaction_durations), 5))
+
+    log.success("\n\n--- " + transaction_file + " stats ---")
+    log.success(
+        "min: " + min_transaction_duration + "   |   " + "max: " + max_transaction_duration + "   |   " + "avg: " + avg_transaction_duration)
+
+    # [
+    #   [(query, duration), (query, duration), ...],
+    #   [(query, duration), (query, duration), ...],
+    #   ...
+    # ]
+    queries_iterations = list(map(lambda stats: stats[1], statistics[1]))
+
+    # [({name, query}, [duration1, duration2, ...]), ...]
+    queries_stats = []
+
+    for query_id in range(len(queries_iterations[0])):
+        query_stats = []
+        for iteration in range(len(queries_iterations)):
+            query_stats.append(queries_iterations[iteration][query_id][1])
+        queries_stats.append((queries_iterations[0][query_id][0], query_stats))
+
+    log.success("\n--- Queries: \n")
+
+    for i, query_stats in enumerate(queries_stats):
+        durations = query_stats[1]
+        max_query_duration = str(round(max(durations), 5))
+        min_query_duration = str(round(min(durations), 5))
+        avg_query_duration = str(round(sum(durations) / len(durations), 5))
+
+        log.success("Query " + str(i) + ": " + query_stats[0]["name"])
+        log.success(
+            "min: " + min_query_duration + "   |   " + "max: " + max_query_duration + "   |   " + "avg: " + avg_query_duration)
 
 
 if __name__ == '__main__':
@@ -291,37 +358,5 @@ if __name__ == '__main__':
     # db.check_data_in_tables()
     # db.reinitialize_database()
 
-    transactions_durations = []
-    last_duration = 0
-
-    transaction = "../manual/transaction1.json"
-    transaction1_durations = []
-    for i in range(10):
-        if last_duration is not None:
-            last_duration = db.execute_transaction(transaction)
-            transaction1_durations.append(last_duration)
-    transactions_durations.append(transaction1_durations)
-
-    transaction = "../manual/transaction2.json"
-    transaction2_durations = []
-    for i in range(10):
-        if last_duration is not None:
-            last_duration = db.execute_transaction(transaction)
-            transaction2_durations.append(last_duration)
-    transactions_durations.append(transaction2_durations)
-
-    transaction = "../manual/transaction3.json"
-    transaction3_durations = []
-    for i in range(10):
-        if last_duration is not None:
-            last_duration = db.execute_transaction(transaction)
-            transaction3_durations.append(last_duration)
-    transactions_durations.append(transaction3_durations)
-
-    log.success("\n\nTransactions' durations:")
-    i = 1
-    for durations in transactions_durations:
-        log.success("Transaction " + str(i) + " average: " + str(sum(durations) / len(durations)) + "s")
-        log.success("Transaction " + str(i) + " maximum: " + str(max(durations)) + "s")
-        log.success("Transaction " + str(i) + " minimum: " + str(min(durations)) + "s")
-        i += 1
+    for stats in benchmark_transactions(20):
+        print_transaction_statistics(stats)
