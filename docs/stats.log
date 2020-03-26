@@ -1,0 +1,89 @@
+--- ../manual/transaction1.json stats ---
+min: 0.7844   |   max: 1.79663   |   avg: 0.95228
+
+--- Queries:
+
+Query 0: Pokaż wszystkie niewypożyczone samochody
+min: 0.00592   |   max: 0.02117   |   avg: 0.01107
+Query 1: Dodaj samochód stacji
+min: 0.00759   |   max: 0.01837   |   avg: 0.01086
+Query 2: Pokaż samochody z przebiegiem większym niż zadany
+min: 0.00316   |   max: 0.01327   |   avg: 0.00603
+Query 3: Samochody naprawione przez konkretne firmy
+min: 0.07139   |   max: 0.19773   |   avg: 0.094
+Query 4: Przenies pracownika do innej stacji
+min: 0.00748   |   max: 0.01475   |   avg: 0.00902
+Query 5: Przenieś wszystkie samochody do innej stacji
+min: 0.0072   |   max: 0.02462   |   avg: 0.01017
+Query 6: Usuń stację
+min: 0.00698   |   max: 0.03079   |   avg: 0.01141
+Query 7: Wypożyczenie samochodu z dwoma wypożyczeniami
+min: 0.01413   |   max: 0.06591   |   avg: 0.02263
+Query 8: Dodanie oceny do wypozyczenia wyzwala obliczenie nowej oceny dla samochodu, ktorego dotyczy wypozyczenie.
+min: 0.055   |   max: 0.16947   |   avg: 0.07171
+Query 9: Zmiana formatu daty
+min: 0.00037   |   max: 0.00083   |   avg: 0.00051
+Query 10: Uzytkownicy ktorzy wypozyczyli samochod w okreslonym przedziale czasowym w okreslonym miescie.
+min: 0.06746   |   max: 0.16736   |   avg: 0.08298
+Query 11: Uzytkownicy ktorzy spowodowali wiecej szkod niz przychodu
+min: 0.50986   |   max: 1.08748   |   avg: 0.6148
+
+
+--- ../manual/transaction2.json stats ---
+min: 1.38172   |   max: 1.99065   |   avg: 1.6198
+
+--- Queries:
+
+Query 0: Pokaż zapełnione stacje ( maksymalna liczba samochodów w stacji )
+min: 0.00783   |   max: 0.02281   |   avg: 0.0128
+Query 1: Zaktualizuj stan licznika samochodu
+min: 0.00753   |   max: 0.0262   |   avg: 0.01254
+Query 2: Zaktualizuj godziny otwarcia stacji, ktora znajduje sie w miescie X
+min: 0.02672   |   max: 0.05621   |   avg: 0.03996
+Query 3: Pogrupowane samochody, liczba uszkodzen i kosztow ich naprawy.
+min: 0.16658   |   max: 0.27115   |   avg: 0.2027
+Query 4: Dodaj nowy przeglad samochodu - nowa firma
+min: 0.00235   |   max: 0.00551   |   avg: 0.00298
+Query 5: Dodaj nowy przeglad samochodu - nowa faktura
+min: 0.02172   |   max: 0.0351   |   avg: 0.02794
+Query 6: Dla uzytkownikow posiadajacych wiecej niz 2 wypozyczen dodaj znizke dla nieoplaconych transakcji (Payment) w wysokosci 5%
+min: 0.35248   |   max: 0.57352   |   avg: 0.43095
+Query 7: Wybierz uzytkownikow ktorzy spowodowali uszkodzenia powyzej kwoty X w Y kolejnych wypozyczen.
+min: 0.00362   |   max: 0.01029   |   avg: 0.00477
+Query 8: Wylacz stacje ktore maja mniej niz X wypozyczen, o ile w panstwie w ktorym wystepuje stacja nie ma mnie niz Y stacji
+min: 0.73926   |   max: 1.09309   |   avg: 0.86922
+
+
+--- ../manual/transaction3.json stats ---
+min: 0.78125   |   max: 1.57254   |   avg: 0.96686
+
+--- Queries:
+
+Query 0: Pokaż włączone stacje
+min: 0.00608   |   max: 0.05573   |   avg: 0.0129
+Query 1: Pokaż wyłączone stacje
+min: 0.00261   |   max: 0.00841   |   avg: 0.00383
+Query 2: Dodaj pracownika do stacji
+min: 0.00212   |   max: 0.01135   |   avg: 0.00372
+Query 3: Samochody, które były naprawiane przez więcej niż X firm
+min: 0.1815   |   max: 0.3476   |   avg: 0.2324
+Query 4: Top X miast w ktorych wypozyczane sa samochody
+min: 0.22194   |   max: 0.43436   |   avg: 0.28181
+Query 5: Zmiana formatu daty
+min: 0.00044   |   max: 0.00116   |   avg: 0.00064
+Query 6: Dodaj znizke do trwajacych wypozyczen rozpoczetych w danym miescie w okreslonym czasie
+min: 0.09086   |   max: 0.22065   |   avg: 0.11052
+Query 7: Wystawienie faktury za naprawe - naprawa samochodu (available)
+min: 0.00836   |   max: 0.02325   |   avg: 0.01105
+Query 8: Wystawienie faktury za naprawe - dodanie kosztow naprawy do oplaty za wypozyczenie
+min: 0.00216   |   max: 0.00834   |   avg: 0.00298
+Query 9: Wystawienie faktury za naprawe - zmiana statusu wszystkich uszkodzen
+min: 0.02794   |   max: 0.09221   |   avg: 0.0394
+Query 10: Wystawienie faktury za naprawe #4
+min: 0.0118   |   max: 0.03205   |   avg: 0.01586
+Query 11: Wystawienie faktury za naprawe #5
+min: 0.0237   |   max: 0.08422   |   avg: 0.03625
+Query 12: Wystawienie faktury za naprawe #6
+min: 0.03441   |   max: 0.12552   |   avg: 0.04796
+Query 13: Uzytkownicy ktorzy w zadanym okresie czasu mieli kontakt z konkretnym pracownikiem (coronavirus)
+min: 0.12351   |   max: 0.29874   |   avg: 0.16058
