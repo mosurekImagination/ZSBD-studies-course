@@ -1,7 +1,7 @@
 # Zapytania 
 
 ## Transakcja 1
-1. Pokaż wszystkie niewypożyczone samochody
+1. Firmy, które wykonały najwięcej zleceń w danym mieście, liczba i suma zleceń
 1. Dodaj samochód stacji
 1. Pogrupowane miasta, liczba dostępnych, niedostępnych samochodów, liczba dostępnych, niedostępnych stacji
 1. Samochody naprawione przez konkretne firmy
