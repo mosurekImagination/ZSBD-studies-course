@@ -16,7 +16,7 @@ Skrypty umieszczane w folderach **setup** i **startup** powinny mieć liczbę na
 
 ## Wymagania:  
 
-* Linux
+* Linux (rekomendowany Vagrant z obrazem [jhipster-devbox](https://github.com/jhipster/jhipster-devbox))
 * Docker
 * docker-compose
 * Python3 & pip3
