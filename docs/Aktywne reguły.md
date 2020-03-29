@@ -20,3 +20,10 @@
 	- **Dzialanie:** Grupujemy wiersze tabeli RentalHistory, których end_date miesci sie w okresie dwóch lat od teraz ze względu na user_id. Wybieramy tylko te user_id, dla których liczba wypożyczeń jest równa 0.
 	- **Szacunek zlozonosci:** Grupowanie jednej tabeli, ze względu na jeden atrybut ze sprawdzeniem warunku + Select z wyniku ze sprawdzeniem warunku
 	- **Mechanizmy:** Asercje, triggery
+1.  Dodanie zniżki dla użytkownika, który posiada więcej niż 2 wypożyczenia w ciągu ostatniego roku 
+	- **Opis:** Reguła dodaje zniżkę w wysokości 5% za każde wypożyczenie w ciągu ostatniego roku, ale nie więcej niż 20%.
+	- **Zdarzenia inicjujace:** Dodanie wiersza do RentalHistory (wypożyczenie)
+	- **Warunki uruchomienia:** W tabeli RentalHistory istnieją poprzednie wypożyczenia dla aktualnego użytkownika w okresie ostatniego roku.
+	- **Dzialanie:** W aktualnie dodawanym wierszu do tabeli RentalHistory modyfikujemy atrybut 'discount' w zależności od ilości wypożyczeń w ciągu ostatniego roku.
+	- **Szacunek zlozonosci:** jeden select ze sprawdzeniem warunku i ewentualna modyfikacja jednego atrybutu wiersza
+	- **Mechanizmy:** Asercje, triggery
