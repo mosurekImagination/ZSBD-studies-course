@@ -40,5 +40,6 @@
     * zmiana statusu wszystkich uszkodzen
     * naprawa samochodu (available)
     * dodanie kosztow naprawy do oplaty za wypozyczenie
+1. Użytkownicy, którzy mają najwięcej wypożyczeń
 1. Uzytkownicy ktorzy w zadanym okresie czasu mieli kontakt z konkretnym pracownikiem (coronavirus)
 1. Wylacz stacje ktore generuja straty wyzsze niz srednia strat ze stacji w tym samym panstwie
