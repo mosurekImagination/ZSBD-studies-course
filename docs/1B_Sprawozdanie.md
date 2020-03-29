@@ -1,17 +1,21 @@
 # Opis danych oraz źródła danych
 
-Dane wypełniające utworzony schemat zostały wygenerowane za pomocą serwisu webowego [Mockaroo](https://www.mockaroo.com/). Na podstawie odpowiednich ustawień zostały wygenerowane transakcje w plikach SQL, które tworzą oraz wypełniają tabelę według schematu podczas uruchamiania kontenera dockerowego.
+## Dane
 
-## Mockaroo
+### Pochodzenie danych
 
-Serwis webowy udostępniający możliwość generowania plików `sql` z transakcją tworzącą tabelę zgodnie z podanym schematem a następnie wypełniającą tą tabelę zadeklarowaną liczbą wierszy. Narzędzie to udostępnia możliwość wybrania spośród tysiąca predefiniowanych typów kolumn począwszy od typów prostych aż po bardziej złożone, które z określonym kontekstem będą wypełniały dany wiersz. Np. wybranie typu `Country` spowoduje, że w nowo dodanym wierszu, wartość `country` zostanie wypołniona jedną z predefiniowanych wartości `Country`, np. Poland.
+Dane zostały wygenerowane za pomocą serwisu webowego [Mockaroo](https://www.mockaroo.com/).
+Serwis pozwala na zdefiniowanie struktury tabel i wybranie typu dla każdego atrybutu.
+Przykładowe typy: ```Numer, Kraj, Nazwa firmy, Imię, Nazwisko...``` 
+
 
 <figure class="image">
   <img src="images/mocaroo_car.png">
   <figcaption style="font-style:italic">Przykład definiowania schematu tabeli <b>CAR</b> </figcaption>
 </figure>
 
-Opcja pobrania pozwala nam na pobranie pliku, którego przykładowa zawartość prezentuje się następująco:
+
+Zawartość wygenerowanych plików ma strukturę zaprezentowana poniżej:
 
 ```sql
 create table Car (
@@ -33,11 +37,20 @@ insert into Car (id, body_type_id, car_station_id, model, manufacturer, producti
 ...
 ```
 
-## Opis danych
+### ***Jakość danych***
 
-### ***Ilość danych***
-Narzędzie [Mockaroo](https://www.mockaroo.com/) generuje powiązane z kontekstem dane do nowych wierszy. Dane te są różnorodne toteż rzadko się powtarzają się w różnych wierszach. Na przykładzie tabeli `Car`:
-| Kolumna | Wierszy | Distinct |
+#### Kontekst
+Przykładowe wygenerowane wartości na przykładzie tabeli `Car`:
+* **Model**: Savana 3500, A6, Pajero, Thunderbird, Aveo, Carens, Camry, Suburban 2500, Space  
+* **Manufacturer**: GMC, Audi, Mazda, Ford, Chevrolet, Kia, Toyota, GMC, Isuzu, Maybach
+* **Color**: Pink,  Blue, Red, Crimson, Red, Teal, Green, Indigo, Goldenrod, Blue
+
+Wszystkie dane zostały wygenerowane tak, aby zgadzały się z kontekstem danego atrybutu.
+
+#### Różnorodność
+Wartości wygenerowanych danych są różnorodne. Na przykładzie tabeli `Car`:
+
+| Kolumna | Wierszy | Unikalne |
 | ------- | ------- | -------- |
 | Model   | 1000    | 498      |
 | Manufacturer | 1000 | 60     |
@@ -46,29 +59,67 @@ Narzędzie [Mockaroo](https://www.mockaroo.com/) generuje powiązane z kontekste
 
 Statystyka ta jest zachowana dla reszty tabel.
 
-### ***Jakość danych***
-Przykładowe wygenerowane wartości na przykładzie tabeli `Car`:
-* **Model**: Savana 3500, A6, Pajero, Thunderbird, Aveo, Carens, Camry, Suburban 2500, Space  
-* **Manufacturer**: GMC, Audi, Mazda, Ford, Chevrolet, Kia, Toyota, GMC, Isuzu, Maybach
-* **Color**: Pink,  Blue, Red, Crimson, Red, Teal, Green, Indigo, Goldenrod, Blue
+### ***Ilość danych***
 
-Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane. 
+| Tabela | Liczba wierszy |
+| ------- | ------- |
+| CAR | 206000 |
+| CARBODYTYPE | 5 |
+| CARSTATION | 201000 |
+| COMPANY | 201000 |
+| DAMAGE | 206000 |
+| DAMAGESTATUS | 3 |
+| DOCUMENTTYPE | 3 |
+| INSPECTION | 201000 |
+| INVOICE | 201000 |
+| LOCATION | 201000 |
+| PAYMENT | 201000 |
+| PAYMENTSTATUS | 3 |
+| PAYMENTTYPE | 2 |
+| RENTALHISTORY | 201000 |
+| STATIONWORKER | 201000 |
+| SYSTEMUSER | 201000 |
+
 
 # Środowisko testowe
-Środowisko testowe tworzone jest za pomocą kontenera Dockerowego. Korzystając z odpowiednio spreparowanego obrazu umieszonego na docker hub, ze skonfigurowanym Oracle Database 19.3 Enterprise Edition wraz z zależnościami na Oracle Linux. 
+Środowisko testowe tworzone jest za pomocą kontenera Dockerowego ze skonfigurowanym **Oracle Database 19.3 Enterprise Edition**.
+Obraz jest przechowywany na prywatnym docker hubie.
 
-Środowisko uruchamiane jest z użyciem komendy docker-compose z użyciem konfiguracji zawartej w docker-compose.yml
+Środowisko uruchamiane jest z użyciem komendy ```docker-compose up```, która opiera się na konfiguracji zawartej w docker-compose.yml
 
------------------------- TUTAJ O KONFIGURACJI ----------------------------------
+Proces uruchamiania środowiska wymaga trzech folderów:
 
+* setup - pliki wewnątrz są uruchamiane przy pierwszym postawieniu dockera. Tworzy użytkownika oraz nadaje mu uprawnienia.
+
+* manual - zawiera pliki ```transaction*.json``` z próbkami obciążenia (zapytania SQL)
+
+* dump - zawiera plik ze zrzutem całej bazy danych (technologia Data Pump)
+
+Po uruchomieniu kontenera dockerowego, wystarczy uruchomić skrypt ```python3 ./scripts/one_click_script.py```.
+Działanie skryptu:
+1. Połącz z bazą danych jako użytkownik ```USR``` (jeżeli się nie udało spróbuj ponownie X razy)
+1. Uruchom benchmark dla każdego zestawu transakcji
+    1. Usuń użytkownika ```USR``` z bazy danych kaskadowo (usuwa cały schemat ```USR``` wraz z danymi)
+    1. Zaimportuj dane z pliku ```./dump/schema_dump.dmp``` (Data Pump)
+    1. Sprawdź, czy dane zostały poprawnie zaimportowane (liczba wierszy w tabelach)
+    1. Uruchom wszystkie polecenia SQL z plików ```./manual/transaction*.json``` X razy, wraz z mierzeniem czasu
+    1. Wydrukuj wyniki pomiarów
 
 # Próbki obciążenia
 
------------------------- Tutaj o próbkach i skryptach ----------------------------
+W pliku ```zapytania.md``` utworzono w jęzku naturalnym opis zapytań z podziałem na:
+1. Operacje odczytu
+    * niska, średnia, wysoka złożoność
+1. Operacje modyfikacji
+    * niska, średnia, wysoka złożoność
+    
+Następnie w pliku zapytania_2.md podzielono te zapytania na zestawy w taki sposób, 
+aby każdy z nich zawierał podobną ilość zapytań o takim samym charakterze (odczyt/modyfikacja), 
+o takiej samej złożoności (niska/średnia/wysoka) 
+oraz o podobnym czasie wykonania.
 
-
-## Czasy transakcji
-#### Transakcja 1
+## Czasy
+#### Zestaw 1
 
 | Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
 | :--------------:  | :----------------: | :---------------: | :---------------: |
@@ -86,7 +137,7 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 | 8 | 0 | 0 | 0 | 0 |
 
 
-#### Transakcja 2
+#### Zestaw 2
 
 | Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
 | :--------------:  | :----------------: | :---------------: | :---------------: |
@@ -103,7 +154,7 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 | 7 | 0 | 0 | 0 | 0 |
 | 8 | 0 | 0 | 0 | 0 |
 
-#### Transakcja 3
+#### Zestaw 3
 
 | Minimalny czas[s]| Maksymalny czas[s]| Średni czas[s]   | Ilość powtorzeń   |
 | :--------------:  | :----------------: | :---------------: | :---------------: |
@@ -120,7 +171,7 @@ Jak widać dane są te zgodne z kontekstem kolumn, do których są przypisane.
 | 7 | 0 | 0 | 0 | 0 |
 | 8 | 0 | 0 | 0 | 0 |
 
-## Wykonanie całych transakcji
+## Wykonanie całych zestawów
 | Nr zapytania   | Minimalny czas[ms]| Maksymalny czas[ms]| Średni czas[ms]   | Ilość powtorzeń   |
 | :------------: | :--------------:  | :----------------: | :---------------: | :---------------: |
 | 1 | 0 | 0 | 0 | 0 |
