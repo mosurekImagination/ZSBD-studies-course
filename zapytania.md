@@ -1,7 +1,6 @@
 # Zapytania 
 
 ## Niska złożoność 4
-1. x Pokaż wszystkie niewypożyczone samochody
 1. x Pokaż zapełnione stacje ( maksymalna liczba samochodów w stacji )
 1. x Pokaż wyłączone / włączone stacje
 
@@ -13,6 +12,7 @@
 1. x % samochodow wypozyczanych i oddawanych w tym samym miescie 
 1. x Pogrupowane miasta, liczba dostępnych, niedostępnych samochodów, liczba dostępnych, niedostępnych stacji
 1. x Użytkownicy, którzy mają najwięcej wypożyczeń
+2. x Firmy, które wykonały najwięcej zleceń w danym mieście, liczba i suma zleceń
 
 ## Wysoka złożoność 4
 1. x Uzytkownicy ktorzy wypozyczyli samochod w okreslonym przedziale czasowym w okreslonym miescie.
