@@ -12,13 +12,14 @@
 1. x Top X miast w ktorych wypozyczane sa samochody 
 1. x % samochodow wypozyczanych i oddawanych w tym samym miescie 
 1. x Pogrupowane miasta, liczba dostępnych, niedostępnych samochodów, liczba dostępnych, niedostępnych stacji
-1. x Pogrupowane firmy, liczba i suma faktur za inspekcje i naprawy
+1. x Użytkownicy, którzy mają najwięcej wypożyczeń
 
 ## Wysoka złożoność 4
 1. x Uzytkownicy ktorzy wypozyczyli samochod w okreslonym przedziale czasowym w okreslonym miescie.
 1. x Wybierz uzytkownikow ktorzy spowodowali uszkodzenia powyzej kwoty X w Y kolejnych wypozyczen.
 1. x Uzytkownicy ktorzy w zadanym okresie czasu mieli kontakt z konkretnym pracownikiem (coronavirus)
 1. x Uzytkownicy ktorzy spowodowali wiecej szkod niz przychodu
+1. x Pogrupowane firmy, liczba i suma faktur za inspekcje i naprawy
 
 # Operacje na bazie
 
