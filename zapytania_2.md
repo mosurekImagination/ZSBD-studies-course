@@ -3,7 +3,7 @@
 ## Transakcja 1
 1. Pokaż wszystkie niewypożyczone samochody
 1. Dodaj samochód stacji
-1. Pokaż samochody z przebiegiem większym niż zadany
+1. Pogrupowane miasta, liczba dostępnych, niedostępnych samochodów, liczba dostępnych, niedostępnych stacji
 1. Samochody naprawione przez konkretne firmy
 1. Usuń stację
     * Przenies pracownika do innej stacji
@@ -31,7 +31,7 @@
 ## Transakcja 3
 
 1. Pokaż wyłączone / włączone stacje
-1. Dodaj pracownika do stacji
+1. Pogrupowane firmy, liczba i suma faktur za inspekcje i naprawy
 1. Samochody ktore mialy wykonane X ostatnich przegladow przez ta sama firme
 1. Top X miast w ktorych wypozyczane sa samochody 
 1. % samochodow wypozyczanych i oddawanych w tym samym miescie 
