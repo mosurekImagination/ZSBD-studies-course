@@ -4,7 +4,6 @@
 1. x Pokaż wszystkie niewypożyczone samochody
 1. x Pokaż zapełnione stacje ( maksymalna liczba samochodów w stacji )
 1. x Pokaż wyłączone / włączone stacje
-1. x Pokaż samochody z przebiegiem większym niż zadany
 
 ## Średnia złożoność 5 
 1. x Samochody ktore mialy wykonane X ostatnich przegladow przez ta sama firme
@@ -12,6 +11,8 @@
 1. x Pogrupowane samochody, liczba uszkodzen i kosztow ich naprawy.
 1. x Top X miast w ktorych wypozyczane sa samochody 
 1. x % samochodow wypozyczanych i oddawanych w tym samym miescie 
+1. x Pogrupowane miasta, liczba dostępnych, niedostępnych samochodów, liczba dostępnych, niedostępnych stacji
+1. x Pogrupowane firmy, liczba i suma faktur za inspekcje i naprawy
 
 ## Wysoka złożoność 4
 1. x Uzytkownicy ktorzy wypozyczyli samochod w okreslonym przedziale czasowym w okreslonym miescie.
@@ -24,7 +25,6 @@
 ## Niska złożoność 4
 1. x Dodaj samochód stacji
 1. x Zaktualizuj stan licznika samochodu
-1. x Dodaj pracownika do stacji
 1. x Zaktualizuj godziny otwarcia stacji, ktora znajduje sie w miescie X
 
 ## Średnia złożoność  4
